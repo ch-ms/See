@@ -12,13 +12,13 @@
         android:id="@+id/navigationPanel"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_alignParentEnd="true" >
+        android:layout_alignParentRight="true" >
         
         <Button 
             android:id="@+id/forget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true" 
+            android:layout_alignParentRight="true" 
             android:text="@string/forget"
             />
         
@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/memorize"
             android:text="@string/forward"
+            android:onClick="onFrwdButtonClick"
             />
         
         <Button
@@ -44,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/forwardButton"
             android:text="@string/back"
+            android:onClick="onBackClick"
             />
     </RelativeLayout>
     
@@ -52,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/navigationPanel"
         >
         

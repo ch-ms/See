@@ -48,8 +48,9 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:text="@string/back"
+            android:onClick="onBackClick"
             />
         
         <Button
@@ -58,13 +59,14 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/backButton"
             android:text="@string/forward"
+            android:onClick="onFrwdButtonClick"
             />
         
         <Button 
             android:id="@+id/forget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true" 
+            android:layout_alignParentRight="true" 
             android:text="@string/forget"
             />
         

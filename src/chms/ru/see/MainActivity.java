@@ -6,9 +6,11 @@ import java.util.regex.Pattern;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.EditText;
 
 @SuppressLint("SetJavaScriptEnabled")
@@ -18,13 +20,25 @@ public class MainActivity extends Activity {
 	
 	private WebView wv; 
 	private EditText addressInput;
+	private Button goButton;
+	private Button backButton;
+	private Button frwdButton;
+	private Button forgetButton;
+	private Button memorizeButton;
+	
+	private final String HTTP_PAT = "^https?://";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		addressInput = (EditText)findViewById(R.id.addressInput);
+		addressInput   = (EditText)findViewById(R.id.addressInput);
+		goButton       = (Button)findViewById(R.id.goButton);
+		backButton     = (Button)findViewById(R.id.backButton);
+		frwdButton     = (Button)findViewById(R.id.forwardButton);
+		forgetButton   = (Button)findViewById(R.id.forget);
+		memorizeButton = (Button)findViewById(R.id.memorize);
 		
 		wv = (WebView)findViewById(R.id.navigator);
 		wv.getSettings().setJavaScriptEnabled(true);
@@ -52,26 +66,65 @@ public class MainActivity extends Activity {
 	}
 	
 	/**
-	 * Перейти на урл
-	 * @param {String} url Адрес
+	 * Нажата кнопка back
+	 * @param v
 	 */
-	public void goToUrl(String url){
-		url = url.trim();
-		url = url.replaceFirst("/$", "");		
+	public void onBackClick(View v){
+		wv.goBack();
+	}
+	
+	/**
+	 * Нажата кнопка forward
+	 * @param v
+	 */
+	public void onFrwdButtonClick(View v){
+		wv.goForward();
+	}
+	
+	/**
+	 * Перейти на урл
+	 * @param url Адрес
+	 */
+	public void goToUrl(String url){	
+		String urlForWv = url.trim();
 		
-		String urlForWv = url;
-		String urlForAddress = url;
-		
-		Pattern httpPat = Pattern.compile("^https?://");
-		Matcher m = httpPat.matcher(url);
-		if(m.find()){
-			urlForAddress = m.replaceFirst("");
-		}else{
+		Matcher m = Pattern.compile(HTTP_PAT).matcher(url);
+		if(!m.find()){
 			urlForWv = "http://" + urlForWv;
 		}
 		
-		addressInput.setText(urlForAddress);
 		wv.loadUrl(urlForWv);
+	}
+	
+	/**
+	 * Обновляет ui кнопок вперед назад.
+	 */
+	public void updateBackForwardUi(){
+		frwdButton.setEnabled(wv.canGoForward());
+		backButton.setEnabled(wv.canGoBack());
+	}
+	
+	/**
+	 * Обновляет адресную строку
+	 */
+	public void updateAddressInputUi(){
+		updateAddressInputUi(wv.getUrl());
+	}
+	
+	/**
+	 * Обновляет адресную строку
+	 * @param url
+	 */
+	public void updateAddressInputUi(String url){
+		Matcher m = Pattern.compile("^file:///").matcher(url);
+		if(m.find()){
+			url = "";
+		}else{
+			url = url.replaceFirst("/$", "");
+			url = url.replaceFirst(HTTP_PAT, "");
+		}
+		
+		addressInput.setText(url);
 	}
 
 }
