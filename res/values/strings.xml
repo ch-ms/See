@@ -4,5 +4,10 @@
     <string name="app_name">See</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="go">Go</string>
+    <string name="back">←</string>
+    <string name="forward">→</string>
+    <string name="memorize">♥</string>
+    <string name="forget">×</string>
 
 </resources>

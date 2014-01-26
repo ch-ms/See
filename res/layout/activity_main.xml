@@ -7,10 +7,84 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    
+    <RelativeLayout 
+        android:id="@+id/addressPanel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        >
+        
+        <Button 
+            android:id="@+id/goButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/go"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            />
+        
+        <EditText 
+            android:inputType="textUri"
+            android:id="@+id/addressInput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/goButton"
+            />
+          
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/navigationPanel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        >
+        
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@string/back"
+            />
+        
+        <Button
+            android:id="@+id/forwardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/backButton"
+            android:text="@string/forward"
+            />
+        
+        <Button 
+            android:id="@+id/forget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true" 
+            android:text="@string/forget"
+            />
+        
+        <Button
+            android:id="@+id/memorize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/forget"
+            android:text="@string/memorize"
+            />
+        
+    </RelativeLayout>
+    
+    <WebView 
+        android:id="@+id/navigattor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/addressPanel"
+        android:layout_above="@id/navigationPanel"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        />
 
 </RelativeLayout>
