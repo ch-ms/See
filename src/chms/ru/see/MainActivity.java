@@ -12,6 +12,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.webkit.WebSettings;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class MainActivity extends Activity {
@@ -45,6 +46,7 @@ public class MainActivity extends Activity {
 		wv.getSettings().setDomStorageEnabled(true);
 		wv.getSettings().setBuiltInZoomControls(true);
 		wv.getSettings().setUserAgentString(USER_AGENT);
+		wv.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
 		wv.setWebViewClient(new SeeWebViewClient(this));
 		
 		wv.loadUrl("file:///android_asset/about.html");
