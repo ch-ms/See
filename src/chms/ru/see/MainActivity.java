@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 		forgetButton   = (Button)findViewById(R.id.forget);
 		memorizeButton = (Button)findViewById(R.id.memorize);
 		
-		rememberedUrl = "";
+		forgetRememberedUrl();
 		
 		wv = (WebView)findViewById(R.id.navigator);
 		wv.getSettings().setJavaScriptEnabled(true);
@@ -55,6 +55,7 @@ public class MainActivity extends Activity {
 		wv.setWebViewClient(new SeeWebViewClient(this));
 		
 		wv.loadUrl("file:///android_asset/about.html");
+		
 	}
 
 	@Override
