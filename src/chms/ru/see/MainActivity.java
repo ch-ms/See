@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -27,6 +28,8 @@ public class MainActivity extends Activity {
 	private Button forgetButton;
 	private Button memorizeButton;
 	
+	private String rememberedUrl;
+	
 	private final String HTTP_PAT = "^https?://";
 
 	@Override
@@ -40,6 +43,8 @@ public class MainActivity extends Activity {
 		frwdButton     = (Button)findViewById(R.id.forwardButton);
 		forgetButton   = (Button)findViewById(R.id.forget);
 		memorizeButton = (Button)findViewById(R.id.memorize);
+		
+		rememberedUrl = "";
 		
 		wv = (WebView)findViewById(R.id.navigator);
 		wv.getSettings().setJavaScriptEnabled(true);
@@ -60,32 +65,8 @@ public class MainActivity extends Activity {
 	}
 	
 	/**
-	 * Нажата кнопка go
-	 * @param v
-	 */
-	public void onGoClick(View v){
-		goToUrl(addressInput.getText().toString());
-	}
-	
-	/**
-	 * Нажата кнопка back
-	 * @param v
-	 */
-	public void onBackClick(View v){
-		wv.goBack();
-	}
-	
-	/**
-	 * Нажата кнопка forward
-	 * @param v
-	 */
-	public void onFrwdButtonClick(View v){
-		wv.goForward();
-	}
-	
-	/**
-	 * Перейти на урл
-	 * @param url Адрес
+	 * Go to a given url
+	 * @param url URL
 	 */
 	public void goToUrl(String url){	
 		String urlForWv = url.trim();
@@ -99,7 +80,86 @@ public class MainActivity extends Activity {
 	}
 	
 	/**
-	 * Обновляет ui кнопок вперед назад.
+	 * Remember current url
+	 */
+	private void rememberCurrentUrl(){
+		rememberedUrl = wv.getUrl();
+		updateMemorizeButtons();
+	}
+	
+	/**
+	 * Forget remembered url
+	 */
+	private void forgetRememberedUrl(){
+		rememberedUrl = "";
+		updateMemorizeButtons();
+	}
+	
+	/**
+	 * Navigate to remembered url
+	 * @return True if we got remembered url, otherwise false
+	 */
+	private boolean goToRememberedUrl(){
+		String url = getRememberedUrl();
+		if(url!=""){
+			wv.loadUrl(url);
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * Get remembered url
+	 * @return Remembered url
+	 */
+	private String getRememberedUrl(){
+		return rememberedUrl;
+	}
+	
+	/**
+	 * Go button pressed
+	 * @param v
+	 */
+	public void onGoClick(View v){
+		goToUrl(addressInput.getText().toString());
+	}
+	
+	/**
+	 * Back button pressed
+	 * @param v
+	 */
+	public void onBackClick(View v){
+		wv.goBack();
+	}
+	
+	/**
+	 * Memorize button pressed
+	 * @param v
+	 */
+	public void onMemorizeButtonClick(View v){
+		if(!goToRememberedUrl()){
+			rememberCurrentUrl();	
+		}
+	}
+	
+	/**
+	 * Forget button pressed
+	 */
+	public void onForgetButtonClick(View v){
+		forgetRememberedUrl();
+	}
+	
+	/**
+	 * Forward button pressed
+	 * @param v
+	 */
+	public void onFrwdButtonClick(View v){
+		wv.goForward();
+	}
+	
+	/**
+	 * Refresh back and forward buttons states
 	 */
 	public void updateBackForwardUi(){
 		frwdButton.setEnabled(wv.canGoForward());
@@ -107,14 +167,14 @@ public class MainActivity extends Activity {
 	}
 	
 	/**
-	 * Обновляет адресную строку
+	 * Refresh URL value in a address input
 	 */
 	public void updateAddressInputUi(){
 		updateAddressInputUi(wv.getUrl());
 	}
 	
 	/**
-	 * Обновляет адресную строку
+	 * Refresh URL value in a address input
 	 * @param url
 	 */
 	public void updateAddressInputUi(String url){
@@ -127,6 +187,19 @@ public class MainActivity extends Activity {
 		}
 		
 		addressInput.setText(url);
+	}
+	
+	/**
+	 * Refresh UI of memorize buttons
+	 */
+	public void updateMemorizeButtons(){
+		if(getRememberedUrl()==""){
+			memorizeButton.setTextColor(Color.BLACK);
+			forgetButton.setEnabled(false);
+		}else{
+			memorizeButton.setTextColor(Color.RED);
+			forgetButton.setEnabled(true);
+		}
 	}
 
 }

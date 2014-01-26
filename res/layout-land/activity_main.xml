@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true" 
             android:text="@string/forget"
+            android:onClick="onForgetButtonClick"
             />
         
         <Button
@@ -28,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/forget"
             android:text="@string/memorize"
+            android:onClick="onMemorizeButtonClick"
             />
         
        	<Button

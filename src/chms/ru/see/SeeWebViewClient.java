@@ -6,7 +6,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 /**
- * Клиент для веб вью
+ * Custom client for web view
  * @author chms
  *
  */
@@ -32,14 +32,12 @@ public class SeeWebViewClient extends WebViewClient {
 	
 	@Override
 	public void onPageStarted(WebView view, String url, Bitmap favicon){
-		Log.v("SeeWebViewClient", "onPageStarted");
 		a.updateAddressInputUi(url);
 		a.updateBackForwardUi();
 	}
 	
 	@Override
 	public void onPageFinished(WebView view, String url){
-		Log.v("SeewebViewClient", "onPageFinished");
 		a.updateAddressInputUi(url);
 		a.updateBackForwardUi();
 	}
